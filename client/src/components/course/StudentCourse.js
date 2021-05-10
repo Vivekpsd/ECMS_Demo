@@ -34,7 +34,8 @@ function loadScript(src) {
     document.body.appendChild(script);
   });
 }
-const __DEV__ = document.domain === 'localhost';
+let __DEV__ = document.domain === 'localhost';
+__DEV__ = 'localhost';
 
 const StudentCourse = ({
   match,
