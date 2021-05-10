@@ -36,7 +36,7 @@ const AssignmentFileStudent = ({
 
   const download = async (course) => {
     axios({
-      url: `http://localhost:5000/api/assignment/student/download-assignment/${match.params.id}/${course}`,
+      url: `/api/assignment/student/download-assignment/${match.params.id}/${course}`,
       method: 'GET',
       responseType: 'blob',
     }).then((response) => {

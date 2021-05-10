@@ -17,7 +17,7 @@ import {
 export const getCourses = () => async (dispatch) => {
   console.log('action all course');
   try {
-    const res = await axios.get('http://localhost:5000/api/course');
+    const res = await axios.get('/api/course');
 
     dispatch({
       type: GET_COURSES,
@@ -34,9 +34,7 @@ export const getCourses = () => async (dispatch) => {
 //Get Courses By ID
 export const getCourseById = (courseId) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `http://localhost:5000/api/course/id/${courseId}`
-    );
+    const res = await axios.get(`/api/course/id/${courseId}`);
 
     dispatch({
       type: GET_COURSE,
@@ -69,14 +67,10 @@ export const createCourse = (
     formData.img = imgname;
     console.log(img);
 
-    const res = await axios.post(
-      'http://localhost:5000/api/course/',
-      formData,
-      config
-    );
+    const res = await axios.post('/api/course/', formData, config);
 
     const res3 = await axios.post(
-      `http://localhost:5000/api/course/courseimg/${res.data._id}`,
+      `/api/course/courseimg/${res.data._id}`,
       img,
       {
         headers: {
@@ -88,7 +82,7 @@ export const createCourse = (
 
     //Get Current Profile
     const res2 = await axios.put(
-      `http://localhost:5000/api/profile/enroll/${res.data._id}`,
+      `/api/profile/enroll/${res.data._id}`,
       body,
       config
     );
@@ -121,7 +115,7 @@ export const createCourse = (
 export const deleteCourse = (courseId, history) => async (dispatch) => {
   if (window.confirm('Are You Sure?')) {
     try {
-      await axios.delete(`http://localhost:5000/api/course/${courseId}`);
+      await axios.delete(`/api/course/${courseId}`);
 
       dispatch({ type: CLEAR_COURSE });
       dispatch(setAlert('Course Removed', 'success'));
@@ -146,7 +140,7 @@ export const enrollCourse = (courseID, history) => async (dispatch) => {
     };
 
     const res = await axios.put(
-      `http://localhost:5000/api/course/enroll/${courseID}`,
+      `/api/course/enroll/${courseID}`,
       courseID,
       config
     );
@@ -174,11 +168,7 @@ export const addComment = (formData) => async (dispatch) => {
       },
     };
 
-    const res = await axios.put(
-      'http://localhost:5000/api/course/course-review',
-      formData,
-      config
-    );
+    const res = await axios.put('/api/course/course-review', formData, config);
     dispatch({
       type: ADD_REVIEW,
       payload: res.data,
@@ -198,7 +188,7 @@ export const deleteComment = (courseID, reviewID) => async (dispatch) => {
   if (window.confirm('Are You Sure?')) {
     try {
       const res = await axios.delete(
-        `http://localhost:5000/api/course/delete/${courseID}/${reviewID}`
+        `/api/course/delete/${courseID}/${reviewID}`
       );
 
       dispatch({ type: DELETE_REVIEW, payload: res.data });
@@ -224,7 +214,7 @@ export const uploadAssignment = (formData, formdetails, courseID) => async (
     };
 
     const res = await axios.post(
-      `http://localhost:5000/api/course/upload-assignment-info/${courseID}`,
+      `/api/course/upload-assignment-info/${courseID}`,
       formdetails,
       config
     );
@@ -232,7 +222,7 @@ export const uploadAssignment = (formData, formdetails, courseID) => async (
     console.log(courseID);
     console.log(res);
     const res2 = await axios.post(
-      `http://localhost:5000/api/assignment/teacher/${courseID}/${formdetails.title}`,
+      `/api/assignment/teacher/${courseID}/${formdetails.title}`,
       formData,
       {
         headers: {
@@ -262,7 +252,7 @@ export const uploadAssignment = (formData, formdetails, courseID) => async (
   //   console.log(formData);
 
   //   const res = await axios.post(
-  //     'http://localhost:5000/api/assignment',
+  //     '/api/assignment',
   //     config,
   //     formData
   //   );

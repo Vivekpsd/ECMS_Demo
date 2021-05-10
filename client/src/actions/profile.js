@@ -13,7 +13,7 @@ import {
 //Get Current Profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('http://localhost:5000/api/profile/me');
+    const res = await axios.get('/api/profile/me');
 
     dispatch({
       type: GET_PROFILE,
@@ -34,7 +34,7 @@ export const getProfiles = () => async (dispatch) => {
     type: CLEAR_PROFILE,
   });
   try {
-    const res = await axios.get('http://localhost:5000/api/profile/');
+    const res = await axios.get('/api/profile/');
 
     dispatch({
       type: GET_PROFILES,
@@ -51,9 +51,7 @@ export const getProfiles = () => async (dispatch) => {
 //Get Profile by Id
 export const getProfileById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `http://localhost:5000/api/profile/user/${userId}`
-    );
+    const res = await axios.get(`/api/profile/user/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
@@ -79,11 +77,7 @@ export const createProfile = (formData, history, edit = false) => async (
       },
     };
 
-    const res = await axios.post(
-      'http://localhost:5000/api/profile',
-      formData,
-      config
-    );
+    const res = await axios.post('/api/profile', formData, config);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -117,11 +111,7 @@ export const sendMessage = (formDate, history) => async (dispatch) => {
       },
     };
 
-    const res = await axios.put(
-      'http://localhost:5000/api/profile/message',
-      formDate,
-      config
-    );
+    const res = await axios.put('/api/profile/message', formDate, config);
     dispatch({
       type: UPDATE_PROFILE,
       payload: res.data,
@@ -157,7 +147,7 @@ export const enrollStudent = (courseID, userID, history) => async (
     };
     const body = { courseID, userID };
     const res = await axios.put(
-      `http://localhost:5000/api/profile/enroll/${courseID}`,
+      `/api/profile/enroll/${courseID}`,
       body,
       config
     );
@@ -187,7 +177,7 @@ export const enrollTeacher = (courseID, history) => async (dispatch) => {
     };
 
     const res = await axios.put(
-      `http://localhost:5000/api/profile/enroll/${courseID}`,
+      `/api/profile/enroll/${courseID}`,
       courseID,
       config
     );

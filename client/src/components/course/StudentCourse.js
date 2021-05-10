@@ -75,10 +75,7 @@ const StudentCourse = ({
       return;
     }
     const dummyData = { price: course.price };
-    const res1 = await axios.post(
-      'http://localhost:5000/api/payment/razorpay',
-      dummyData
-    );
+    const res1 = await axios.post('/api/payment/razorpay', dummyData);
 
     console.log(res1.data.amount);
 
@@ -89,7 +86,7 @@ const StudentCourse = ({
       order_id: res1.data.id,
       name: 'Engineers Gurukul',
       description: 'Thank you Buying',
-      image: 'http://localhost:5000/api/payment/logo.png',
+      image: '/api/payment/logo.png',
       handler: function (response) {
         // alert(response.razorpay_payment_id);
         // alert(response.razorpay_order_id);

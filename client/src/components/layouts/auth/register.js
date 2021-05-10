@@ -34,11 +34,7 @@ const Register = ({ setAlert }) => {
           },
         };
 
-        const res = await axios.post(
-          'http://localhost:5000/api/users',
-          newUser,
-          config
-        );
+        const res = await axios.post('/api/users', newUser, config);
         console.log(res.data);
       } catch (err) {
         console.log(err.response.data);

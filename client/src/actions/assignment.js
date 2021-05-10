@@ -11,9 +11,7 @@ import {
 //Get all Courses
 export const getAssignmentCourse = () => async (dispatch) => {
   try {
-    const res = await axios.get(
-      'http://localhost:5000/api/assignment/courselist'
-    );
+    const res = await axios.get('/api/assignment/courselist');
 
     dispatch({
       type: ASSIGNMENT_COURSE,
@@ -30,9 +28,7 @@ export const getAssignmentCourse = () => async (dispatch) => {
 export const getUploadedAssignment = (courseID) => async (dispatch) => {
   console.log(courseID);
   try {
-    const res = await axios.get(
-      `http://localhost:5000/api/assignment/course-list/${courseID}`
-    );
+    const res = await axios.get(`/api/assignment/course-list/${courseID}`);
 
     dispatch({
       type: GET_ASSIGNMENTS,
@@ -52,7 +48,7 @@ export const getUploadedAssignments = (courseID, name) => async (dispatch) => {
   console.log(courseID);
   try {
     const res = await axios.get(
-      `http://localhost:5000/api/assignment/assignmentuploded/${courseID}/${name}`
+      `/api/assignment/assignmentuploded/${courseID}/${name}`
     );
 
     dispatch({
@@ -80,7 +76,7 @@ export const uploadAssignmentStudent = (
   console.log('In Action');
   try {
     const res = await axios.post(
-      `http://localhost:5000/api/assignment/student/${courseID}/${assignID}/${username}/${email}`,
+      `/api/assignment/student/${courseID}/${assignID}/${username}/${email}`,
       formData,
       {
         headers: {

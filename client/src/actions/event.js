@@ -12,7 +12,7 @@ import {
 // Get all Events
 export const allEvents = () => async (dispatch) => {
   try {
-    const res = await axios.get('http://localhost:5000/api/event');
+    const res = await axios.get('/api/event');
 
     dispatch({
       type: GET_EVENTS,
@@ -31,7 +31,7 @@ export const allEvents = () => async (dispatch) => {
 export const deleteEvent = (eventID, history) => async (dispatch) => {
   if (window.confirm('Are You Sure?')) {
     try {
-      await axios.delete(`http://localhost:5000/api/event/${eventID}`);
+      await axios.delete(`/api/event/${eventID}`);
 
       dispatch({ type: CLEAR_EVENT });
       dispatch(setAlert('Event Removed', 'success'));
@@ -49,9 +49,7 @@ export const deleteEvent = (eventID, history) => async (dispatch) => {
 export const getEventById = (eventID) => async (dispatch) => {
   console.log('hello');
   try {
-    const res = await axios.get(
-      `http://localhost:5000/api/event/id/${eventID}`
-    );
+    const res = await axios.get(`/api/event/id/${eventID}`);
 
     dispatch({
       type: GET_EVENT,
@@ -74,11 +72,7 @@ export const createEvent = (formData, history) => async (dispatch) => {
       },
     };
 
-    const res = await axios.post(
-      'http://localhost:5000/api/event/',
-      formData,
-      config
-    );
+    const res = await axios.post('/api/event/', formData, config);
 
     dispatch({
       type: GET_EVENT,
