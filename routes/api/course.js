@@ -264,12 +264,12 @@ router.post('/courseimg/:courseID', async (req, res) => {
     var filename = file.name;
     var courseID = req.params.courseID;
     var paths = path.join(
-      __dirname + '\\..' + '\\..' + '\\..',
+      __dirname + '\\..' + '\\..',
       '/client',
       '/public',
       '/courses'
     );
-    console.log(paths);
+    console.log(paths + '--');
 
     file.mv(`${paths}/` + filename, async function (err) {
       if (err) {
