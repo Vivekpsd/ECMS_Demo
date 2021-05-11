@@ -73,7 +73,6 @@ export const uploadAssignmentStudent = (
   courseID,
   assignID
 ) => async (dispatch) => {
-  console.log('In Action');
   try {
     const res = await axios.post(
       `/api/assignment/student/${courseID}/${assignID}/${username}/${email}`,
