@@ -13,7 +13,7 @@ import {
 //Get Current Profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/profile/me');
+    const res = await axios.get('http://localhost:5000/api/profile/me');
 
     dispatch({
       type: GET_PROFILE,
@@ -34,7 +34,7 @@ export const getProfiles = () => async (dispatch) => {
     type: CLEAR_PROFILE,
   });
   try {
-    const res = await axios.get('/api/profile/');
+    const res = await axios.get('http://localhost:5000/api/profile/');
 
     dispatch({
       type: GET_PROFILES,
@@ -51,8 +51,10 @@ export const getProfiles = () => async (dispatch) => {
 //Get Profile by Id
 export const getProfileById = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/profile/user/${userId}`);
-
+    const res = await axios.get(
+      `http://localhost:5000/api/profile/user/${userId}`
+    );
+    console.log(res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -67,39 +69,45 @@ export const getProfileById = (userId) => async (dispatch) => {
 
 // Crate or update profile
 
-export const createProfile = (formData, history, edit = false) => async (
-  dispatch
-) => {
-  try {
-    const config = {
-      header: {
-        'Content-Type': 'application/json',
-      },
-    };
+export const createProfile =
+  (formData, history, edit = false) =>
+  async (dispatch) => {
+    try {
+      const config = {
+        header: {
+          'Content-Type': 'application/json',
+        },
+      };
 
-    const res = await axios.post('/api/profile', formData, config);
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data,
-    });
+      const res = await axios.post(
+        'http://localhost:5000/api/profile',
+        formData,
+        config
+      );
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data,
+      });
 
-    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
-    if (!edit) {
-      history.push('/dashboard');
+      dispatch(
+        setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success')
+      );
+      if (!edit) {
+        history.push('/dashboard');
+      }
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
     }
-  } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    }
-
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
+  };
 
 // Send Message
 
@@ -111,7 +119,11 @@ export const sendMessage = (formDate, history) => async (dispatch) => {
       },
     };
 
-    const res = await axios.put('/api/profile/message', formDate, config);
+    const res = await axios.put(
+      'http://localhost:5000/api/profile/message',
+      formDate,
+      config
+    );
     dispatch({
       type: UPDATE_PROFILE,
       payload: res.data,
@@ -135,36 +147,35 @@ export const sendMessage = (formDate, history) => async (dispatch) => {
 
 // Add Course in profile
 
-export const enrollStudent = (courseID, userID, history) => async (
-  dispatch
-) => {
-  console.log(courseID);
-  try {
-    const config = {
-      header: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const body = { courseID, userID };
-    const res = await axios.put(
-      `/api/profile/enroll/${courseID}`,
-      body,
-      config
-    );
+export const enrollStudent =
+  (courseID, userID, history) => async (dispatch) => {
+    console.log(courseID);
+    try {
+      const config = {
+        header: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const body = { courseID, userID };
+      const res = await axios.put(
+        `http://localhost:5000/api/profile/enroll/${courseID}`,
+        body,
+        config
+      );
 
-    dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data,
-    });
-    dispatch(setAlert('You are  Enrolled', 'success'));
-  } catch (err) {
-    console.log('error');
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: { msg: 'Failed' },
-    });
-  }
-};
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data,
+      });
+      dispatch(setAlert('You are  Enrolled', 'success'));
+    } catch (err) {
+      console.log('error');
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: 'Failed' },
+      });
+    }
+  };
 
 // Add Course in profile(teacher)
 
@@ -177,7 +188,7 @@ export const enrollTeacher = (courseID, history) => async (dispatch) => {
     };
 
     const res = await axios.put(
-      `/api/profile/enroll/${courseID}`,
+      `http://localhost:5000/api/profile/enroll/${courseID}`,
       courseID,
       config
     );
